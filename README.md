@@ -40,8 +40,8 @@ In order to create and edit group policies, the Group Policy Management Console 
 - To edit a Group Policy Object, right-click the GPO and select Edit - this will open up the Group Policy Management Editor (GPME) windows where you can create and edit policies for your domain
 
 In the GPME, there are Computer Configurations and User Configurations
-- Computer Configurations refer to a policy that will apply to the local computer and will not change per user - this is meant for settings on the computer itself, not for the user logging on to that computer
-- User Configurations refer to a policy that will apply to users on the local computer and will apply to any new users in the future on this local computer
+- Computer Configurations refer to a policy that will apply to computer objects in the OU where the GPO is applied
+- User Configurations refer to a policy that will apply to user objects in the OU where the GPO is applied
 
 Under the Configurations, there are Policies and Preferences folders that can also be expanded to show things like Software Settings, Windows Settings, Administrative Templates, and Control Panel Settings
 - Policies can't be changed by users and are enforced by admins and Active Directory - these may include things like password policies and account lockout policies
