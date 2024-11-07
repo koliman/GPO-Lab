@@ -122,7 +122,8 @@ The final step is now applying the GPOs to the users and computers on the domain
   - For a Computer Configuration GPO (like Password Policy), the same drag and drop will apply but this time onto the Computers OU
 - Continue applying the other created GPOs to their respective OUs if desired, including the bonus challenge policy if created
 - Note: Once a new computer is joined to the domain, it's important to move that computer to the appropriate OU - newly joined computers are only in the Computers OU in AD by default, so in order for the new computer to have the GPOs applied to it, it needs to be moved into the appropriate OU
-- Go to Active Directory Users & Computers, right-click the computer, select Move..., then select the OU to move the computer to the appropriate Computers OU (in this case, the Computers OU in our company)
+  - Another best practice is to put descriptions in Properties for any new computers to inform others about the computer or in case others forget
+- Go to Active Directory Users & Computers, right-click the computer, select Move..., then select the OU to move the computer to the appropriate Computers OU (in this case, the Computers OU in the company)
   - If changes are not reflected yet in the OU, right-click in the OU and select Refresh to update the screen
 - Make sure the computer has been moved into the OU where the GPO has been applied to or else the GPO will not work as intended!
 - To test the GPO, go back to the client machine
@@ -139,4 +140,4 @@ The final step is now applying the GPOs to the users and computers on the domain
 
 ## Next Steps
 
-There are plenty of other GPOs that were not looked at, so potential next steps could include checking out other GPOs and what they're intended to do, possibly creating more GPOs and testing to see how they work, such as using GPO to map network drives to grant users persistent access to shared resources.
+There are plenty of other GPOs that were not looked at, so potential next steps could include checking out other GPOs and what they're intended to do/enforce, or possibly creating more GPOs and testing to see how they work, such as security policies for stricter/fine-grained passwords or to map network drives to grant users persistent access to shared resources
