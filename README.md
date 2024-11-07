@@ -25,8 +25,8 @@ Group Policy Objects (GPOs) are collections of policies in Active Directory (AD)
 
 Note: This uses a domain that was previously created in <a href="https://github.com/koliman/Active-Directory-Lab">this Active Directory Lab</a>. The instructions here assume that a Windows Server environment with Active Directory is set up already. If you would like to follow along with this lab, it is highly suggested to do the previous lab or create a domain that has some users if you happen to already have a Windows Server set up already.
 
-(Under construction as of 11/4 - Please come back soon)
-<!--
+(Steps mostly complete as of 11/6 - Screenshots coming soon)
+
 1. Install Group Policy Management Console (GPMC)
 
 In order to create and edit group policies, the Group Policy Management Console feature needs to be installed on our server.
@@ -112,4 +112,31 @@ After setting up the server, the DNS settings on the client machine need to be u
 
 6. Implementing and Testing GPOs
 
--->
+The final step is now applying the GPOs to the users and computers on the domain. Once they're applied, testing if it works is very simple, but there are some things to be aware of when it comes to testing the GPOs.
+
+- To apply GPOs, first open the GPMC
+- In the left pane, under the Group Policy Objects container, all of the previously created GPOs should be visible
+- To apply a specific GPO, select the GPO, then drag and drop that GPO onto the OU to apply the GPO to that OU
+  - For this example, drag the Restrict Control Panel policy onto the Users OU
+- After the drag and drop, expanding the Users OU in the left pane should show that the GPO is linked to the Users OU - this means the GPO will be applied to the users since it is a User Configuration GPO
+  - For a Computer Configuration GPO (like Password Policy), the same drag and drop will apply but this time onto the Computers OU
+- Continue applying the other created GPOs to their respective OUs if desired, including the bonus challenge policy if created
+- Note: Once a new computer is joined to the domain, it's important to move that computer to the appropriate OU - newly joined computers are only in the Computers OU in AD by default, so in order for the new computer to have the GPOs applied to it, it needs to be moved into the appropriate OU
+- Go to Active Directory Users & Computers, right-click the computer, select Move..., then select the OU to move the computer to the appropriate Computers OU (in this case, the Computers OU in our company)
+  - If changes are not reflected yet in the OU, right-click in the OU and select Refresh to update the screen
+- Make sure the computer has been moved into the OU where the GPO has been applied to or else the GPO will not work as intended!
+- To test the GPO, go back to the client machine
+- If the client machine has been kept open all this time (did you close it?), it will still have access to the Control Panel - what happened? It turns out, if an account is still logged in while Group Policy are applied or changed, they actually aren't applied yet
+  - By default, Windows refreshes GP settings every 90 minutes, with a random offset of up to 30 minutes, which means they don't apply immediately
+- To apply a GP update immediately, it must be forced through commands, either in Command Prompt or PowerShell
+  - In Command Prompt, use the gpupdate /force command; in PowerShell, use Invoke-GPUpdate
+
+## Hands-On Activity
+
+- If not done already, create the GPO for Account Lockout Policy
+- Apply the other created GPOs to their respective Users or Computers OUs
+- Test all of the applied GPOs and see if they're all working
+
+## Next Steps
+
+There are plenty of other GPOs that were not looked at, so potential next steps could include checking out other GPOs and what they're intended to do, possibly creating more GPOs and testing to see how they work, such as using GPO to map network drives to grant users persistent access to shared resources.
