@@ -25,7 +25,7 @@ Group Policy Objects (GPOs) are collections of policies in Active Directory (AD)
 
 Note: This uses a domain that was previously created in <a href="https://github.com/koliman/Active-Directory-Lab">this Active Directory Lab</a>. The instructions here assume that a Windows Server environment with Active Directory is set up already. If you would like to follow along with this lab, it is highly suggested to do the previous lab or create a domain that has some users if you happen to already have a Windows Server set up already.
 
-(Steps mostly complete as of 11/6 - Screenshots coming soon)
+(Steps mostly complete - Screenshots coming soon)
 
 1. Install Group Policy Management Console (GPMC)
 
@@ -51,10 +51,33 @@ Under the Configurations, there are Policies and Preferences folders that can al
 
 In this lab, just a few GPOs will be set up from the myriad of options available to edit. Feel free to look through the other settings or templates to work out what they do and how they can be set!
 - Policy 1: Password Policy
+  - Open the GPMC and open the Forest into your domain
+  - Right-click your domain and select Create a GPO in this domain, and link it here
+  - Put "Password Policy" as the name - It is best practice to use descriptive naming that will tell you and others what the policy does
+  - Right-click the Password Policy that was just created and select Edit
+  - Figure out which is going to use the policy: the user or the computer
+  - Question: Is this a Computer Configuration or a User Configuration?
+    <details>
+      <summary>Reveal Answer</summary>
+
+      Answer: Computer Configuration because the computer is asking for the password when you are logging in
+    </details>
+  - Question: Is it Policies or Preferences?
+    <details>
+      <summary>Reveal Answer</summary>
+
+      Answer: Policies - This policy should never be altered or changed by the user; it should be enforced by admin because they don't want users to mess with the password length or complexity since these should be default and consistent
+    </details>
+  - Under Computer Configuration, open up Policies, open up Windows Settings, then open up Security Settings, and finally open up Account Policies
+  - Click on Password Policy to open up the various policies in the right pane and their settings
+  - To change a policy, click on it and a window will open for that policy's properties that can be edited - click Minimum password length to open its Properties window, check the box for Define this policy setting, and set the value for minimum characters to 12 character, then click the Apply and OK buttons
+  - Repeat this process to change Password must meet complexity requirements to Enabled, and change Maximum password age policy by setting it to change every quarter (have it expire every 90 days)
+  - When clicking Apply, Windows may also give suggestions for other policies that should be modified alongside the policy that was just changed
+  - To verify the changes that were made to the Password Policy under our domain, right-click the Password Policy policy, select Edit... and see that the policies that were previously edited had their settings saved
 - Policy 2: Desktop Wallpaper Policy
 - Policy 3: Restrict Access to Control Panel
 - Policy 4: Disable USB Storage
-- Bonus Challenge for the reader: Account Lockout Policy - Configure a policy for account lockout settings to prevent brute force attacks
+- Once a policy is created, they can be applied and implemented to an OU or a group of objects, which is easier to do than applying to each individual user
 
 3. Create a VM using Windows 10 Enterprise
 
@@ -134,7 +157,7 @@ The final step is now applying the GPOs to the users and computers on the domain
 
 ## Hands-On Activity
 
-- If not done already, create the GPO for Account Lockout Policy
+- Bonus Challenge: Create the GPO for Account Lockout Policy, asking and answering the two important questions
 - Apply the other created GPOs to their respective Users or Computers OUs
 - Test all of the applied GPOs and see if they're all working
 
